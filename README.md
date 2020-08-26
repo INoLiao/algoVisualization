@@ -14,13 +14,23 @@ This repo realizes algorithms visualization to make complex algorithms easier to
   $ git clone https://github.com/INoLiao/algoVisualization.git
   ```
 
+* Change directory to the folder that you are interested in, e.g.
+
+  ```bash
+  $ cd naiveBFS
+  ```
+
 * Activate virtual environment
 
   ```bash
   $ source env/bin/activate
   ```
 
-* Run the main file by python
+* Run the main file by python, e.g.
+
+  ```bash
+  $ python naiveBFS.py
+  ```
 
 * Deactivate virtual environment
 
