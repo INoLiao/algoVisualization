@@ -86,33 +86,27 @@ class Console:
         elif value == Status.PATH:
             return "green"
 
-# 2D Board.
-class Board:
-
-    # @param List[List[int]]
-    # @return None
-    def __init__(self, board):
-        self.board = board
-
-    # @return List[List[int]]
-    def getBoard(self):
-        return self.board
-
 # Graph Utility.
 class Graph:
     
+    # @param console: Console
+    # @param window: tkinter.Tk
     def __init__(self, console, window):
         self.console = console
         self.window = window
 
+    # Update the board and then update the window to reflect the change.
+    # @param board: List[List[STATUS]]
     def updateGUI(self, board):
         self.console.drawBoard(board)
         self.window.update()
 
+    # Draw the path adn then update the window to reflect the change.
     def drawPath(self, board, path):
         self.console.drawPath(board, path)
         self.window.update()
 
+    # Find shortest path w/ BFS from start to end.
     # @param board: List[List[Status]]
     # @param start: Tuple(int, int)
     # @param end: Tuple(int, int)
@@ -186,6 +180,7 @@ class Graph:
         return board
 
     # Derive the path with direction.
+    #   - path derived from predecessor which is derived by `findShortestPath()`
     # @param predecessor: dict({ Tuple(int, int): Tuple(int, int) })
     # @param node: Tuple(int, int)
     # @return List[Tuple(Tuple(int, int), str)]
@@ -242,23 +237,23 @@ if __name__ == '__main__':
     console = Console("2D Grid", (800, 800))
 
     # Initialize board
-    board = Board([[Status.EMPTY] * 20 for _ in range(20)])
+    board = [[Status.EMPTY] * 20 for _ in range(20)]
     start, end = (2, 2), (17, 11)
-    board.board[start[0]][start[1]] = Status.START
-    board.board[end[0]][end[1]] = Status.END
+    board[start[0]][start[1]] = Status.START
+    board[end[0]][end[1]] = Status.END
 
     # Draw walls
     count = 0
     for i in range(4, 15, 2):
         for j in range(count, 15 + count, 1):
-            board.board[i][j] = Status.WALL
+            board[i][j] = Status.WALL
         count += 1
     for i in range(16, 20):
-        board.board[i][9] = Status.WALL
+        board[i][9] = Status.WALL
     for j in range(10, 12):
-        board.board[16][j] = Status.WALL
+        board[16][j] = Status.WALL
     for i in range(16, 19):
-        board.board[i][12] = Status.WALL
+        board[i][12] = Status.WALL
 
 
     # Initialize image
@@ -273,8 +268,7 @@ if __name__ == '__main__':
 
     # Start the animation
     graph = Graph(console, window)
-    time.sleep(5)
-    graph.findShortestPath(board.getBoard(), start, end)
+    graph.findShortestPath(board, start, end)
 
     # Animation finishes
     while console.running:
